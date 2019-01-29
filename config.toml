@@ -1,0 +1,84 @@
+baseurl = "https://swang8.github.io"
+DefaultContentLanguage = "en"
+#DefaultContentLanguage = "ja"
+title = "Deep Trace"
+theme = "beautifulhugo"
+metaDataFormat = "yaml"
+pygmentsStyle = "trac"
+pygmentsUseClasses = true
+pygmentsCodeFences = true
+pygmentsCodefencesGuessSyntax = true
+#pygmentsUseClassic = true
+#pygmentOptions = "linenos=inline"
+#disqusShortname = "XXX"
+#googleAnalytics = "XXX"
+
+[Params]
+  homeTitle = "Too Young Too Simple" # Set a different text for the header on the home page
+  subtitle = "Sometimes naive"
+#  logo = "img/avatar-icon.png" # Expecting square dimensions
+#  favicon = "img/favicon.ico"
+  dateFormat = "January 2, 2006"
+  commit = false
+  rss = true
+  comments = true
+  readingTime = true
+  wordCount = true
+  useHLJS = true
+  socialShare = true
+  delayDisqus = true
+  showRelatedPosts = true
+  since = 2019
+#  gcse = "012345678901234567890:abcdefghijk" # Get your code from google.com/cse. Make sure to go to "Look and Feel" and change Layout to "Full Width" and Theme to "Classic"
+
+#[[Params.bigimg]]
+#  src = "img/triangle.jpg"
+#  desc = "Triangle"
+#[[Params.bigimg]]
+#  src = "img/sphere.jpg"
+#  desc = "Sphere"
+#  # position: see values of CSS background-position.
+#  position = "center top"
+#[[Params.bigimg]]
+#  src = "img/hexagon.jpg"
+#  desc = "Hexagon"
+
+[Author]
+  name = "Shane Wang"
+  email = "shane.lunu@gmail.com"
+  github = "swang8"
+  twitter = "shichenTX"
+
+[[menu.main]]
+    name = "Blog"
+    url = "blog"
+    weight = 1
+
+[[menu.main]]
+    name = "About"
+    url = "about/"
+    weight = 3
+
+[[menu.main]]
+    identifier = "Books"
+    name = "Books"
+    weight = 2
+
+[[menu.main]]
+    parent = "Books"
+    name = "ISLR"
+    url = "books/2017-03-07-bigimg-sample"
+    weight = 1
+
+[[menu.main]]
+    parent = "Books"
+    name = "Intro to machine learning"
+    url = "books/2017-03-05-math-sample"
+    weight = 2
+
+[[menu.main]]
+    parent = "Books"
+    name = "Computer age statistial inference"
+    url = "books/2016-03-08-code-sample"
+    weight = 3
+
