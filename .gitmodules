@@ -4,3 +4,6 @@
 [submodule "themes/themes/beautifulhugo"]
 	path = themes/themes/beautifulhugo
 	url = https://github.com/halogenica/beautifulhugo.git
+[submodule "public"]
+	path = public
+	url = git@github.com:swang8/swang8.github.io
