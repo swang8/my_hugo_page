@@ -67,18 +67,18 @@ pygmentsCodefencesGuessSyntax = true
 [[menu.main]]
     parent = "Books"
     name = "ISLR"
-    url = "books/2017-03-07-bigimg-sample"
+    url = "books/islr"
     weight = 1
 
 [[menu.main]]
     parent = "Books"
     name = "Intro to machine learning"
-    url = "books/2017-03-05-math-sample"
+    url = "books/intro_ml"
     weight = 2
 
 [[menu.main]]
     parent = "Books"
     name = "Computer age statistial inference"
-    url = "books/2016-03-08-code-sample"
+    url = "books/compstats"
     weight = 3
 
