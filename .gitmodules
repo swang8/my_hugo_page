@@ -4,3 +4,12 @@
 [submodule "public"]
 	path = public
 	url = git@github.com:swang8/swang8.github.io
+[submodule "themes/hugo-theme-cleanwhite"]
+	path = themes/hugo-theme-cleanwhite
+	url = https://github.com/zhaohuabing/hugo-theme-cleanwhite.git
+[submodule "themes/themes/hugo-theme-jane"]
+	path = themes/themes/hugo-theme-jane
+	url = https://github.com/xianmin/hugo-theme-jane.git
+[submodule "themes/hugo-theme-jane"]
+	path = themes/hugo-theme-jane
+	url = https://github.com/xianmin/hugo-theme-jane.git

@@ -14,10 +14,10 @@ pygmentsCodefencesGuessSyntax = true
 #googleAnalytics = "XXX"
 
 [Params]
-  homeTitle = "Too Young Too Simple" # Set a different text for the header on the home page
-  subtitle = "Sometimes naive"
-#  logo = "img/avatar-icon.png" # Expecting square dimensions
-#  favicon = "img/favicon.ico"
+  homeTitle = "Trace Deep In Data" # Set a different text for the header on the home page
+  subtitle = ""
+  logo = "images/mollusc01.png" # Expecting square dimensions
+  favicon = "images/favicon.ico"
   dateFormat = "January 2, 2006"
   commit = false
   rss = true
@@ -44,14 +44,14 @@ pygmentsCodefencesGuessSyntax = true
 #  desc = "Hexagon"
 
 [Author]
-  name = "Shichen Wang"
-  email = "shane.lunu@gmail.com"
+  name = "S Wang"
+  email = "shichen.wang@gmail.com"
   github = "swang8"
   twitter = "shichenTX"
 
 [[menu.main]]
     name = "Blog"
-    url = "blog"
+    url = "blog/"
     weight = 1
 
 [[menu.main]]
@@ -72,13 +72,10 @@ pygmentsCodefencesGuessSyntax = true
 
 [[menu.main]]
     parent = "Books"
-    name = "Intro to machine learning"
-    url = "books/intro_ml"
+    name = "Machine Learning in Action"
+    url = "books/mla"
     weight = 2
-
 [[menu.main]]
-    parent = "Books"
-    name = "Computer age statistial inference"
-    url = "books/compstats"
+    name = "Tags"
+    url = "tags"
     weight = 3
-

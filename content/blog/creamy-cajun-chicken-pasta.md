@@ -1,7 +1,8 @@
 ---
 title: Creamy cajun chicken pasta
 date: 2019-01-28
-tag: ['receipe', 'paste', 'chicken', 'cajun']
+tags: ['receipe', 'paste', 'chicken', 'cajun']
+
 ---
 ![https://thecozycook.com/wp-content/uploads/2016/02/Chicken-Bacon-Spinach-Pasta-Recipe.jpg](https://thecozycook.com/wp-content/uploads/2016/02/Chicken-Bacon-Spinach-Pasta-Recipe.jpg)
 # Ingredients:

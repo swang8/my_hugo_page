@@ -1,6 +1,8 @@
 ---
 title: Personal Finance Series Cheat Sheet
 date: 2019-01-28
+tags: ["finace"]
+
 ---
 See the original link: [https://medium.com/personal-finance-series-by-richard-reis/i-wrote-about-finance-for-a-year-heres-all-you-need-to-know-6cbd6bd78743](https://medium.com/personal-finance-series-by-richard-reis/i-wrote-about-finance-for-a-year-heres-all-you-need-to-know-6cbd6bd78743)
 
