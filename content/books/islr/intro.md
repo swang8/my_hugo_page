@@ -18,8 +18,20 @@ relationships and structures from such data.
 
 ## Notation and simple algebra
 
-The $ X_{ij} $ represents the value for the $ jth $ variable for the $ ith $
-observation, where $ i=1,2,...n $ and $ j=1,2,...n $.
+Let the $X$ denotes a matrix. $X_{ij}$ represents the value of column
+$j$ and row $i$.
+
+<div>
+$$
+X = 
+\left(\begin{array}{cc}
+x_{11} &x_{12} &\cdots &x_{1p}\\ 
+x_{21} &x_{22} &\cdots &x_{2p}\\
+\ldots &\ldots &\ldots &\ldots\\
+x_{n1} &x_{n2} &\cdots &x_{np}
+\end{array}\right)
+$$
+</div>
 
 ## get the R package
 ```r
