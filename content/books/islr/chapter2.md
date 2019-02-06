@@ -168,7 +168,49 @@ E(y_0 - \hat{f}(x_0))^2 = Var(\hat{f}(x_0)) + [Bias(\hat{f}(x_0))]^2 + Var(\epsi
 $$
 </div>
 
+Here the notation $E(y_0-\hat{f}(x_0))^2$ defines the *exptected test MSE*, and refers to the average test MSE that we would obtain if we repeatedly estimated $f$ using a large number of training sets, and tested each at $x_0$. The overall expected test MSE can be computed by averaging $E(y_0-\hat{f}(x_0))^2$ overall possible values of $x_0$ in the test set.
 
+The equation shows that in order to minimize the expected test error, we need to select a statistical learning method that simultaneously achieves *low variance* and *low bias*.
 
+What do we mean by the the `variance` and `bias` of a statistical learning method?
 
+`Variance` referes to the amount of by which $\hat{f}$ would change if we estimated it using a different training data set. Since the training data are used to fit the statistical method, different training data sets will result in a different $\hat{f}$. But ideally the estimate of $f$ should not vary too much between training sets.
+
+If a method has high variance then small changes in the training data can result in large changes in $\hat{f}$. In general, more flexible statistical methods have higher variance.
+
+`Bias` referes to theerro that is introduced by approximating a real-life problem, which may be extremely complicated, by as much simpler model.
+
+As a general ruls, as we use more flexible methods, the variance will increase and the bias will decrease. 
+
+### The Classification Setting
+Suppose that we seek to estimate $f$ on the basis of training observations ${(x_1, y_1), \ldots, (x_n, y_n)}$, where now $y_1,\ldots,y_n$ are qualitative. The training *error rate* is calculated as the proportion of mistakes that are made if we apply our estimte $\hat{f}$ to the training observations:
+
+<div>
+$$
+\frac{1}{n}\sum_{i=1}^n I(y_i \neq \hat{y}_0)
+$$
+</div>
+
+Here $\hat{y}_i$ is the predicted class label for the *ith* observation using $\hat{f}$. And $I(y_i \neq \hat{y}_i)$ is an *indicator variable* that equals 1 if $y_i \neq \hat{y}_i$ and zero if $y_i = \hat{y}_i$.
+
+As in the regression setting, we are most interested in the error rates that result from applying our classifier to test observations that were not used in training. The *test error rate* associated with a set of test observations of the form $(x_0, y_0)$ is given by 
+
+<div>
+$$
+Ave(I(y_0 \neq \hat{y}_0))
+$$
+</div>
+
+#### The Bayes Classifier
+To minimize the test error rate: assign each observation to the most likely class given its predictor values.
+
+The conditional probability:
+
+<div>
+$$
+Pr(Y=j|X=x_0)
+$$
+</div>
+
+It is the probability that $Y = j$, given the observed predictor vector $x_0$. This very simple classifier is called the *`bayes classifier`*.
 
