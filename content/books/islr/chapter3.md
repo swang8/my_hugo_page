@@ -1,5 +1,5 @@
 ---
-title: "Chapter3"
+title: "Chapter3: Linear Regression"
 date: 2019-02-07T14:46:09-06:00
 tags: ['islr', 'statistics learning', 'R']
 ---
@@ -249,5 +249,80 @@ $$
 where $X_j$ represents the *jth* predictor and $\beta_j$ quantifies the association between that variable and the response. We interpret $\beta_j$ as the *average* effect on $Y$ of a one unit increase in $X_j$, *holding all other predictors fixed*.
 
 ### Estimating the Regression Coefficients
+
+The paraeters are estimated using the same least squares approach that we saw in the context of simple linear regression. We choose $\beta_0, \beta_1\ldots,\beta_p$ to minimize the sum of squared residuals.
+
+<div>
+$$
+\begin{aligned}
+RSS &= \sum_{i=1}^n(y_i - \hat{y}_i)^2 \\
+&= \sum_{i=1}^n(y_i - \hat{\beta}_0 - \hat{\beta}_1 x_{i1} - \hat{\beta}_2 x_{i2} - \cdots - \hat{\beta}_p x_{ip})^2
+\end{aligned}
+$$
+</div>
+
+### Some Important questions
+
+When we perform multiple linear regression, we usually are interested in answering a few important questions:
+
+1. *Is at least one of the predictors $X_1, X_2, \ldots, X_p$ useful predicting the response?*
+
+2. *Do all the predictors help to explain $Y$, or is only a subset of the predictors useful?*
+
+3. *How well does the model fit the data?*
+
+4. *Given a set of predictor values, what response value should we predict, and how accuracy is our prediciton?*
+
+<u>One: Is There a Relationship Between the Response and Predictors?</u>
+
+Recall that in the simple linear regression setting, in order to determine whether there is a relationship between the response and the predictor we can simply check whether $\beta_1 = 0$. In the multiple regression setting with $p$ predictors, we need to ask whether all of the regression coefficients are zero, i.e. whether $\beta_1 = \beta-2 = \cdots = \beta_p = 0$. As in the simple linear regression setting, we use a hypothesis test to answer this questions We test the null hypothesis, 
+
+<div>
+$$
+H_0: \beta_1 = \beta_2 = \cdots = \beta_p = 0
+$$
+</div>
+
+versus the alternative
+
+<div>
+$$
+H_a: at\ least\ one\ \beta_j\ is\ non-zero
+$$
+</div>
+
+This hypothesis test is performed by computing the `F-statistic`,
+
+<div>
+$$
+F = \frac{(TSS-RSS)/p}{RSS/(n-p-1)},
+$$
+</div>
+
+where , as with simple linear regression, $TSS=\sum(y_i - \bar{y})^2$ and $RSS=\sum(y_i - \hat{y}_i)^2$.
+
+If the linear model assumptions are correct, one can show that 
+
+<div>
+$$
+E\{ RSS/(n-p-1) \} = \sigma^2
+$$
+</div>
+
+and that, provided $H_0$ is true,
+
+<div>
+$$
+E\{ (TSS-RSS)/p \} = \sigma^2
+$$
+</div>
+
+Hence, when there is **no** relationship between the response and predictors, the `F-statistic` to take on value close to 1; on the other hand, if $H_a$ is true, then $E\{(TSS-RSS)/p\} > \sigma^2$, so we expect `F-statistic` to take on value greater than 1.
+
+How large does the `F-statistic` need to be before we can reject $H_0$ and conclude that there is a relationship?  It turns out the answer depends on the values of $n$ and $p$. 
+
+When $n$ is large, and `F-statistic` that is just a little larger than 1 might still provide evidence against $H_0$. In contrast, a larger `F-statistic` is needed to reject $H_0$ if $n$ is small.
+
+When $H_0$ is  true and the error term $\epsilon_i$ have a normal distribution, the `F-statistic` follows an F-distribution. P-value can be calculated based on the distribution. 
 
 

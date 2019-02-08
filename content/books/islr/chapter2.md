@@ -1,5 +1,5 @@
 ---
-title: "Chapter2"
+title: "Chapter2: Basic concepts of Statistical Learning"
 date: 2019-02-01T14:46:09-06:00
 tags: ['islr', 'statistics learning', 'R']
 ---
