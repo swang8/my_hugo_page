@@ -325,4 +325,71 @@ When $n$ is large, and `F-statistic` that is just a little larger than 1 might s
 
 When $H_0$ is  true and the error term $\epsilon_i$ have a normal distribution, the `F-statistic` follows an F-distribution. P-value can be calculated based on the distribution. 
 
+Sometimes, we want to test that a particular subset of $q$ of the coefficients are zero. This corresponding to a null hypothesis
+
+<div>
+$$
+H_0: \beta_{p-q+1} = \beta_{p-q+2} = \ldots = \beta_p = 0
+$$
+</div>
+
+where for convinience we have put the variables chose for omission at the end of the list. In this case, we fit a second model that uses all the variables *except* those last $q$. Suppose that the resudual sum of squares for that model is $RSS_0$. Then the appropriate F-statistic is 
+
+<div>
+$$
+F = \frac{(RSS_0 - RSS)/q}{RSS/(n-p-1)}
+$$
+</div>
+
+
+Normally, for each individual predictor a *t-statistic* and a *p-value* were reported. These provide information about whether each individual predictor is related to the response, after adjusting for the other predictors. It turns out that each of these are exactly equivalent to the F-test that omits that single variable from the model, leaving all the others in. So it reports the `partial effect` of  adding that variable to the model.
+
+Given these individual p-values for each variable, why do we need to look at the overall F-statistic? After all, it seems likely that if any one of the p-values for the individual variables is very small, then *at least one of the predictors is related to the response*. However, this logic is flawed, especially when the number of predictors $p$ is large.
+
+For instace, consider an example in which $p = 100$ and $H_0: \beta_1=\beta_2=\ldots=\beta_p=0$ is true, so no variable is truly associated with the response. In this situation, about 5% of the p-values associated with each variable will be below 0.05 by chance. In other words, we expect to see approximately five *small* p-values even in the absence of any true association between the predictors and hte response. In fact, we are almost guaranteed that we will observe at least one p-value below 0.05 by change! Hence if we use the individual t-statistics and associated p-values in order to decide whether or not there is any association between the variables and the response, there is a very high chance that we will incorrectrly concluded that there is a relationship. However, the F-statistic does not suffer from this problem because it adjusts for the number of predictors. Hence, if $H_0$ is true, there only a 5% chance that the F-statistic will result in a p-value below 0.05 regarless of the number of predictors or the number of observations.
+
+The approach of using an F-statisc to test for any association between the predictors and the response works when $p$ is relative *small*, and certainly small compared to $n$. However, sometimes we have a very large number of variables. If $p > n$ then there are more coefficients $\beta_j$ to estimate than overvations from which to estimate them. In this case we cannot even fit the multiple linear regressio model using least squares, so the F-statistic cannot be used, and neither can most the other concepts that we have seen so far in this chapter. When $p$ is large, some of the approaches discussed in the next section, such as `forward selection`, can be used. This *high-dimiensional* setting is discussed in greater detail in Chapter 6.
+
+<u>Two: Deciding on Important Variables</u>
+
+As discussed in the previous section, the first step in a multiple regression analysis is to compute the F-statistic and to determine the associated p-values. If we conclude on the basis of that p-values that at least one of the predictors is related to the response, then it is natural to wonder *which* are the guilty ones! We could look at the individual p-values, but as discussed, if $p$ is large we are likely to make some false discoveries.
+
+It is possible that all of the predictors are associated with the response, but it is more often the case that the response is only related to a subset of the predictors. The task of determining which predictors are associated with the response, in order to fit a single model involving only those predictors, is refered to as `variable selection`.
+
+Ideally, we would like to perform variable selectoiin by trying out a lot of different models, each containing a different subset of the predictors. For instance, if $p=2$, then we can consider four models: (1) a model containing no variables, (2) a model containing $X_1$ only, (3) a model containing $X_2$ only, (4) a model containing both $X_1$ and $X_2$. We can then select the *best* model out of all of the models that we have considered. How do we determine which model is best? Various statistics can be used to judge the quality of a model. These include $Mallow's C_p$, $Akaike\ information\ criterion\ (AIC)$, $Bauesian\ information\ criterion\ (BIC)$, and $adjusted\ R^2$. We can also determine which model is best by plotting various model outputs, such as the residuals, in order to search for patterns.
+
+Unfortunately, there are a total of $2^p$ models that contain subsets of $p$ variables. This means that even for moderate $p$, trying out every possible subset of the predictors is infeasible. For instance, we saw that if $p=2$, then there are $2^2 = 4$ models to consider. But if $p=30$, then we must consider $2^30=1,073,741,824$ models! This is not practical.
+
+We need an automated and efficient approach to choose a smaller set of models to consider. There are three classical approaches for this tasks:
+
+* `Forward selection`. We begin with the *null model* -- a model that contains an intercept but no predictors. We then fit $p$ simple linear regressions and add to the null model the variable that results in the lowes RSS. We then add to that model the variable that results in the lowes RSS for the new tow-variable model. This appraoch is continued until some stopping rule is statisfied.
+
+* `Backward selection`. We start with all variables in the model, and remove the variable with the largest p-value--that is, the variable that is the least statistically significant. The new $(p-1)$-variable model is fit, and the variable with the largest p-value is removed. This procedure continues until a stopping rule is reached. For instance, we may stop when all remaining variables have a p-value below some threshold.
+
+* `Mixed selection`. This is a combination of forward and backward selection. We start with no variables in the model, and as with forward selection, we add the variable that provides the best fit. We continue to add variables one-by-one. However, if at any point the p-value for one of the variables in the model rises above a certain threshold, then we remove that variable from the model. We continue to perform these foreard and backward steps until all variables in the model have a sufficiently low p-value, and all variables outside the model would have a large p-value if added to the model.
+
+Backward selection cannot be used if $p > n$, while forward selection can always be used. Forward selection is a greedy approach, and might include variables early that later become redundant. Mixed selection can remedy this.
+
+<u>Three: Model Fit</u>
+
+Two of the most common numerial measures of model fit are the RSE and $R^2$, the fraction of variance explained. 
+
+Recall that in simple regression, $R^2$ is the square of the correlation of the response and the variable. In multiple linear regression, it turns out that it equals $Cor(Y, \hat{Y})^2$, the square of the correlation between the response and fitted linear model; in fact one property of the fitted linear model is that it maximizes this correlation among all possible linear models.
+
+In general RSE is defined as 
+
+<div>
+$$
+RSE = \sqrt{\frac{1}{n-p-1}RSS}
+$$
+</div>
+
+In addition to looking at the RSE and $R^2$ statistics, it can be useful to plot the data. 
+
+<u>Four: Predictoins</u>
+
+Once we have fit the multiple regression model, it is straightforward to apply in order to predict the response $Y$ on the basis of a set of values for the predictors $X_1,X_2,\ldots,X_p$. However, there are three sorts of uncertainty associated with this prediction.
+
+1. The coefficient estimates $\hat{\beta}_0, \hat{\beta}_1, \ldots,\hat{\beta}_p$ is only an estimate for the *true* population regression plane. The inacccuracy in the coefficient estimates is related to the *reducible error*. We can compute a *confidence interval* in order to determine how close $\hat{Y}$ will be to $f(X)$.
+
 
