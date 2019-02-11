@@ -392,4 +392,101 @@ Once we have fit the multiple regression model, it is straightforward to apply i
 
 1. The coefficient estimates $\hat{\beta}_0, \hat{\beta}_1, \ldots,\hat{\beta}_p$ is only an estimate for the *true* population regression plane. The inacccuracy in the coefficient estimates is related to the *reducible error*. We can compute a *confidence interval* in order to determine how close $\hat{Y}$ will be to $f(X)$.
 
+2. Of course, in practice assuming a linear modle for $f(X)$ is almost always an approximation of reality, so there is an additional source of potentially reducible error which we call *model bias*. So when we use a linear model, we are in fact estimating the best linear approximation to the true surface. However, here we will ignore this discrepancy, and operate as if the linear model were correct. 
 
+3. Even if we know $f(X)$ -- that is, even if we knew the true values for $\beta_0,
+beta_1,\ldots,\beta_p$ -- the response value cannot be predicted perfectly because of the random error $\epsilon$ in the model, which is refered as *irreducible error*. How much will $Y$ vary from $\hat{Y}$? We use `prediction intervals` to answer this question. Prediction invervals are always wider than confidence intevals, because they incorporate both the error in the estimate for $f(X)$ and the uncertainty as to how much an individual point will differ from the population regression plane (the irreducible error).
+
+## Other considerations in the regression Model
+
+### Qualitative Predictors
+
+In practice, often many predictors are qualitative.
+
+<u>Predictors with Only Two Levels</u>
+If a qualitative predictor only has two levels, or possible values, then incorporating it into a regression model is simple. We simply create an indicator or *dummy variable* that takes on two possible numerical values. 
+
+<div>
+$$
+x_i=
+\begin{cases}
+1 &\text{if ith person is female} \\
+0 & \text{if ith person is male}
+\end{cases}
+$$
+</div>
+
+<u>Qualitative Predictors with More than Two Levels</u>
+
+When a qualitative predictor has more than two levels, a single dummy variable cannot represent all possible values. In this situation, we can create additional dummy variables. Multiple dummy variables can be used.
+
+### Extentions of the Linear Model
+
+The standard linear regression model provides interpretable results and works quite well on many real-world problems. However, it makes several highly restrictive assumptions that are often violated in practive. Two of the most important assumptions state that the relationship between the predictors and response are `additive` and `linear`. The additive assumption means that the effect of changes in a predictor $X_j$ on the response $Y$ is independent of the values of the other predictors. The linear assumption states that the change in the response $Y$ due to a one-unit change in $X_i$ is constant, regardless of the value of $X_j$. 
+
+Some common classical approaches for extending the linear model.
+
+<u>Removing the Additive Assumption</u>
+ 
+Consider the standard linear regression model with two variables,
+
+<div>
+$$
+Y = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \epsilon
+$$
+</div>
+
+According to this model, if we increase $X_1$ by one unit, then $Y$ will increase by an average of $\beta_1$ units. Notice that the presence of $X_2$ does not alter this statement -- that is, regardless of the value of $X_2$, a one-unit increase in $X_1$ will lead to a $\beta_1$-unit increase in $Y$.
+
+One way of extending this model to allow for interaction effects is to include a third predictor, called an `interaction term`, which is constructed by computing the product of $X_1$ and $X_2$. This results in the model
+
+<div>
+$$
+Y = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \beta_3 X_1 X_2 + \epsilon
+$$
+</div>
+
+How does inclusion of this interaction term relax the additive assumption?
+
+Notice the formula can be written as 
+
+<div>
+$$
+\begin{aligned}
+Y &= \beta_0 + (\beta_1 + \beta_3 X_2)X_1 + \beta_2 X_2 + \epsilon \\
+&=\beta_0 + \tilde{\beta}X_1 + \beta_2 X_2 + \epsilon
+\end{aligned}
+$$
+</div>
+
+where $\tilde{\beta} = \beta_1 + \beta_3 X_2$. Since $\tilde{\beta}$ changes with $X_2$, the effect of $X_1$ on $Y$ is no longer constant: adjusting $X_2$ will change the impact of $X_1$ on $Y$.
+
+The `hierarchical principle`: if we include an interaction in a model, we should also include the main effects, even if the p-values associated with their coefficients are not significant.
+
+<u>Non-linear Relationship</u>
+
+As discussed previously, the linear regression model assumes a linear relationship between the response and predictors. But in some cases, the true relationship between the response and the predictors may be non-linear. A simple way to directly extend the linear model to accommodate non-linear relationships, using `polynomial regression`. More complex approaches for performing non-linear fits in more general settings will be introduced later.
+
+### Potential Problems
+
+When we fit a linear regression model to a particular data set, many problems may occur. 
+
+1. Non-linearity of the response-predictor relationships
+
+2. Correlation of error terms
+
+3. Non-constant variance of error terms
+
+4. Ourliers
+
+5. High-leverage points
+
+6. Collinearity
+
+In practice, identifying and overcoming these problems is as much an art as a science. 
+
+<u>1. Non-linearity of the Data</u>
+
+The linear regression model assumes that there is a straight-line relationship between the predictors and the response. If the true relationship is far from linear, then virtually all of the conclusions that we draw from the fit are suspect. In addition, the prediction accuracy of the model can be significantly reduced.
+
+`Residual plots` are a useful graphical tool for identifying non-linearity. Given a simple linear regression model, we can plot the residuals, $e_i = y_i - \hat{y}_i$ versus the predictor $x_i$.
