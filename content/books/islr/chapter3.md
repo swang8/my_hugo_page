@@ -490,3 +490,38 @@ In practice, identifying and overcoming these problems is as much an art as a sc
 The linear regression model assumes that there is a straight-line relationship between the predictors and the response. If the true relationship is far from linear, then virtually all of the conclusions that we draw from the fit are suspect. In addition, the prediction accuracy of the model can be significantly reduced.
 
 `Residual plots` are a useful graphical tool for identifying non-linearity. Given a simple linear regression model, we can plot the residuals, $e_i = y_i - \hat{y}_i$ versus the predictor $x_i$.
+
+If the residual plot indicates that there are non-linear associations in the data, then a simple approach is to use non-linear transfromations of the predictors, such as $logX$, $\sqrt{X}$, $X^2$, in the regression model.
+
+<u>2. Correlation of Error Terms</u>
+
+An important assumption of the linear regression model is that the error term, $\epsilon_1,\epsilon_2,\ldots,\epsilon_n$, are uncorrelated. What does this mean? For instance, if the effors are uncorrelated, then the fact the $\epsilon_i$ is positive provides little or no information about the sigh of $\epsilon_{i+1}$. The standard errors that are computed for the estimated regression coefficients or the fitted values are based on the assumption of uncorrelated error terms. If in fact there is correlation among the error terms, then the estimated standard errors will tend to underestimate the true standard errors.
+
+As an extreme example, suppose we accidentally doubled our data, leading to observations and error terms identical in pairs. If we ignored this, our standard error calculations would be as if we had a smple of size $2n$, when in fact we have only $n$ samples. Our estimated parameters would be the same for the $2n$ samples as for the $n$ samples, but the confidence intervals would be narrower by a factor of $\sqrt{2!}$.
+
+Why might correlations among the error terms occur? Such correlations frequently occur in the context of *time series* data, which consists of observations for which measurements are obtained at discrete points in time. In many cases, overvations that are obtained at adjacent time points will have positively correlated errors. In order to determine if this i the case for a given data set, we can plot the residuals from our model as a function of time. If the errors are uncorrelated, then there should be no discernible pattern. On the other hand, if the error terms are positively correlated, then we may see tracking in the residuals--that is, adjacent residuals may have similar values.
+
+Many methods have been developed to properly take account of correlations in the error terms in time series data. Correlation among the error terms can also occur outside of time series data. For instance, consider a study in which individuals' height are predicted from their weights. The assumption of uncorrelated errors could be violated if some of the individuas in the study are members of the same family, or eat the same diet, or have been exposed to the same environmental factors. In general, the assumption of uncorrelated erros is extremely important for linear regression as well as for other statitical methods, and good experimental design is cruicial in order to mitigate the risk of such correlation.
+
+<u>3. Non-constant Variance of Error Terms</u>
+
+Another important assumption of the linear regression model is that the error terms have a constant variance, $Var(\epsilon_i) = \sigma^2$. The standard errors, confidence intervals, and hypothesis tests associated with the linear model rely upon this assumption. 
+
+Unfortunately, it is oftern the case that the variance of the error terms are non-constant. For instance, the variance of the error terms may increase with the value of the response. One can identify non-constant variancee in the errors, or *heteroscedasticity*, from the presence of a *funnel shape* in the residual plot. When faced with this problem, one possible solution is to transform the response $Y$ using a concave function such as $logY$ or $\sqrt{Y}$. Such a transformation results in a greater amount of shrinkage of the large responses, leading to a reduciton in heteroscedasticity. 
+
+Sometimes, we have a good idea of the variance of each response. For example, the *ith* response would be an average of $n^i$ raw observations. If each of these raw observations is uncorrelated with variance $\sigma^2$, then their average has variance $\sigma_{i}^2 = \sigma^2/n_i$. In this case a simple remedy is to fit our model by `weighted least squares`, with weights proportional to the inverse variance--i.e. $w_i = n_i$ in this case.
+
+<u>4. Outliers</u>
+
+An *outlier* is a point for which $y_i$ is far from the value predicted by the model. Ourliers can arise for a variety of reasons, such as incorrect recording of an obervation during data collection.
+
+Residual plots can be used to identify outliers. In practice, it can be difficult to decide how large a residual needs to be before we consider the point to be an outlier. To address this problem, instead of plotting the residuals, we can plot the `studentized residuals`, computed by dividing each residual $e_i$ by its estimated standard error. Observations whose studentized residuals are greater than 3 in absolute value are possible outliers.
+
+If we believe that an outlier has occured due to an error in data collection or recording, then on solution is to simply remove the observation. However, care should be taken, since an outlier may instead indicate a deficiency with the model, such as a missing predictor.
+
+<u>5. High Leverage Points</u>
+
+We just saw that outliers are observations for which the response $y_i$ is unusual given the predictor $x_i$. In contrast, observations with *high leverage* have an unusual value for $x_i$. 
+
+
+
