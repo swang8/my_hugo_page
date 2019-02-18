@@ -523,5 +523,27 @@ If we believe that an outlier has occured due to an error in data collection or 
 
 We just saw that outliers are observations for which the response $y_i$ is unusual given the predictor $x_i$. In contrast, observations with *high leverage* have an unusual value for $x_i$. 
 
+<u>6. Collinearity</u>
 
+`Collinearity` refers to the situation in which two or more predictor variables are closely related to one another. The presence of collinearity can pose problems in the regression context, since it can be diffcult to separate out hte individual effets of collinear variables on the response. In other words, since two variables tend to increase or decrease together, it can be difficult to determine how each one separately is associated with the response.
+
+Since collinearity reduces the accuracy of the estimates of the regression coefficients, it causes the standard error for $\hat{\beta}_j$ to grow. Recall that the *t-statistic* for each predictor is calculated by dividing $\hat{\beta}_j$ by its standard error. Consequently, collinearity results in a decline in the *t-statistic*. As a result, in the presence of collinearity, we may fail to reject $H_0 : \beta_j = 0$. This means that the `power` of the hypothesis test--**the probability of correctly detecting a non-zero coefficient** -- is reduced by collinearity.
+
+A simple way to detect collinearity is to look at the correlation matrix of the predictors. An element of this matrix that is large in absolute value indicates a pair of highly correlated variables, and therefore a collinearity problem in the data. Unfortunately, not all collinearity problems can be dtected by inspection of the correlation matrix: it is possible for collinearity to exist between three or more variables even if no pair of variables has a particularly high correlation. We can this situation *multicollinearity*. 
+
+A better way to assess multicollinearity is to compute the *variance inflation factor* (VIF). The VIF is the ratio of the variance of $\hat{\beta}_j$ when fitting the full model divided by the variance of $\hat{\beta}_j$ if fit on its own. The smallest possible value for VIF is 1, which indicates the complete absence of collinearity. Typically in practice there is a small amount of collinearity among the predictors. As a rule of thumb, a VIF value that exceeds 5 or 10 indicates a problematic amount of collinearity. The VIF for each variable can be computed using the formula
+
+<div>
+$$
+VIF(\hat{\beta}_j) = \frac{1}{1-R_{X_j|X_{-j}}^2}
+$$
+</div>
+
+where $R_{X_j|X_{-j}}^2$ is the $R^2$ from a regression of $X_j$ onto all of the other predictors. If $R_{X_j|X_{-j}}^2$ is close to one, then collinearity is presented, and so the VIF will be large.
+
+When faced with the problem of collinearity, there are two simple solutions.
+
+1). Drop one of the problematic variables from the regression. This can usually be done without much compromise to the regression fit, since the presence of collinearity implies that the information that this variable provides about the response is redundant in the presence of the other variables.
+
+2). Combine the collinear variables together into a single predictor. 
 
