@@ -495,7 +495,7 @@ If the residual plot indicates that there are non-linear associations in the dat
 
 <u>2. Correlation of Error Terms</u>
 
-An important assumption of the linear regression model is that the error term, $\epsilon_1,\epsilon_2,\ldots,\epsilon_n$, are uncorrelated. What does this mean? For instance, if the effors are uncorrelated, then the fact the $\epsilon_i$ is positive provides little or no information about the sigh of $\epsilon_{i+1}$. The standard errors that are computed for the estimated regression coefficients or the fitted values are based on the assumption of uncorrelated error terms. If in fact there is correlation among the error terms, then the estimated standard errors will tend to underestimate the true standard errors.
+An important assumption of the linear regression model is that the error term, $\epsilon_1, \epsilon_2 , \ldots, \epsilon_n$,  are uncorrelated. What does this mean? For instance, if the effors are uncorrelated, then the fact the $\epsilon_i$ is positive provides little or no information about the sigh of $\epsilon_{i+1}$. The standard errors that are computed for the estimated regression coefficients or the fitted values are based on the assumption of uncorrelated error terms. If in fact there is correlation among the error terms, then the estimated standard errors will tend to underestimate the true standard errors.
 
 As an extreme example, suppose we accidentally doubled our data, leading to observations and error terms identical in pairs. If we ignored this, our standard error calculations would be as if we had a smple of size $2n$, when in fact we have only $n$ samples. Our estimated parameters would be the same for the $2n$ samples as for the $n$ samples, but the confidence intervals would be narrower by a factor of $\sqrt{2!}$.
 
@@ -539,11 +539,17 @@ VIF(\hat{\beta}_j) = \frac{1}{1-R_{X_j|X_{-j}}^2}
 $$
 </div>
 
-where $R_{X_j|X_{-j}}^2$ is the $R^2$ from a regression of $X_j$ onto all of the other predictors. If $R_{X_j|X_{-j}}^2$ is close to one, then collinearity is presented, and so the VIF will be large.
+where $ R_{X_j|X_{-j}}^2 $ is the $R^2$ from a regression of $X_j$ onto all of the other predictors. If $R_{X_j|X_{-j}}^2$ is close to one, then collinearity is presented, and so the VIF will be large.
 
 When faced with the problem of collinearity, there are two simple solutions.
 
 1). Drop one of the problematic variables from the regression. This can usually be done without much compromise to the regression fit, since the presence of collinearity implies that the information that this variable provides about the response is redundant in the presence of the other variables.
 
 2). Combine the collinear variables together into a single predictor. 
+
+
+Lab: <a href="/jupyter/Chapter3_Linear_Regression_lab.html" target="_blank"> Chapter3_Linear_Regression_lab.html </a>
+
+<hr>
+
 
