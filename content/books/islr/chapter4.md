@@ -110,6 +110,18 @@ The left-hand side is called the `log-odds` or `logit`. We see that the logistic
 
 ### Estimating the Regression Coefficients
 
-The coefficients $\beta_0$ and $\beta_1$ are unknown, and must be estimated based on the available training data. Althought\ we could use non-linear least squares to fit the model, the more general method of `maximum likelihood` is preferred, since it has better statistical properties. 
+The coefficients $\beta_0$ and $\beta_1$ are unknown, and must be estimated based on the available training data. Although we could use non-linear least squares to fit the model, the more general method of `maximum likelihood` is preferred, since it has better statistical properties. 
 
-The basid intuition behind using maximum likelihood to fit a logistic regression model is a s follows: we seek estimates for $\beta_0$ and $\beta_1$ such that the predicted probability $\hat{p}(x_i)$ of 
+The basid intuition behind using maximum likelihood to fit a logistic regression model is a s follows: we seek estimates for $\beta_0$ and $\beta_1$ such that the predicted probability $\hat{p}(x_i)$ of default for each individual corresponds as closely as possible to the individual's observed default status. In other words, we try to find $\hat{\beta}_0$ and $\hat{\beta}_1$ such that plugging these estimates into the model for $p(X)$ yields a number close to one for those who defaulted, and a number close to zero for all who did not. This can be formalized using a mathematical equation called a `likelihood funciton`:
+
+<div>
+$$
+\ell(\beta_0, \beta_1) = \prod_{i:y_i=1} p(x_i) \prod_{i':y_{i'}} (1 - p(x_{i'}))
+$$
+</div>
+
+The estimate $\hat{\beta}_0$ and $\hat{\beta}_1$ are chosen to *maximize* this likelihood function.
+
+
+
+
