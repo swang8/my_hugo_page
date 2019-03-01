@@ -320,4 +320,5 @@ No one method will dominate the others in every situatioin. When the true decisi
 
 Finally, we cann that in the regression setting we can accommodate a non-linear relationship between the predictors and the response by performing regression using transformations of the predictors. A similar approach could be taken in the classification setting. For instance, we could create a more flexible version of logistic regression by including $X^2, X^3$ and even $X^4$ as predictors. This may or may not improve logistic regression performance, depending on whether the increase in variance due to the added flexibility is offset by a sufficiently large reduction in bias. We could do hte same for LDA. If we add all possible quadratic terms and cross-products to LDA, the form of the model would be the same as the QDA model, although the parameter estimates would be different. This device allows us to move somewhere between an LDA and a QDA model.
 
-
+----
+<a href="/jupyter/Chapter4_Classification_lab.html">Chapter4_Classification_lab.html</a>
