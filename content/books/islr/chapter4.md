@@ -243,4 +243,81 @@ $$
 $$
 </div>
 
-is largest.
+is largest. The word *linear* is the classifier's name stems from the fact that the *discriminant function* $hat{\delta_k(x)}$ are linear functions of $x$ (as opposed to a more complex function of $x$).
+
+To reiterate, the LDA classifier results from assuming that the observations within each class come from a normal distribution with a class-specific mean vaector and a common variance $\sigma^2$, and pluggin estiamtes for these parameters into the Bayes classifier. In the following section, we will consider a less stringent set of assumptions, by allowing the observations in the $k$th class to have a class-specific variance, $\sigma_k^2$.
+
+### Linear Discriminatnt Analysis for p > 1
+
+We now extend the LDA classifier to the case of multiple predictors. To do this, we will assume that $X = (X_1,X_2,\ldots,X_p)$ is drawn from a *multiple Gaussian* or multivariate normal distribution, with a class-specific mean vector and a common covarince matrix.
+
+The multivariate Gaussian distribution assemes that each individual predictor follows a one-dimensional normal distribution, with some correlation between each pair of predictors.
+
+To indicate that a p-dimensional randome variable $X$ has a multivariate Gaussian distribution, we write $X \sim N(\mu, \Sigma)$. Here $E(X) = \mu$ is the mean of $X$ (a vector with $p$ components), and $Cov(X)=\Sigma$ is the $p \times p$ covariance matrix of $X$. Formally, the multivariate Gaussian density is defined as
+
+<div>
+$$
+f(x)=\frac{1}{(2\pi)^{p/2}|\Sigma|^{1/2}}\exp\Big(-\frac{1}{2}(x-\mu)^T\Sigma^{-1} (x-u)\Big)
+$$
+</div>
+
+In the ase of $p > 1$ predictors, the LDA classifier assumes that the observations in the $k$th class are drawn from a multivariate Gaussian distribution $N(\mu_k, \Sigma)$, where $\mu_k$ is a class-specific mean vector, and $\Sigma$ is a covariance matrix that is common to all $K$ classes. Plugging the density function for the $k$th class, $f_k(X = x)$, and performing little of algebra reveals the Bayes classifier assigns an observation $X=x$ to the class for which 
+
+<div>
+$$
+\delta_k(x) = X^T\Sigma^{01} \mu_k - \frac{1}{2}\mu_k^T \Sigma^{-1}\mu_k + log\pi_k
+$$
+</div>
+
+is the largest.
+
+### Quadratic Discriminant Analysis
+
+As we have discussed, LDA assumes that the observations within wach class are drawn from a multivariate Gaussian distribution with a class-specific mean vector and a covariance matrix that is cmommon to all $K$ classes. `Quadratic discriminant analysis` (QDA) provides an alternative approach. Like LDA, the QDA classifier results from assuming that the observations from each class are drawn a Gaussian distribution, and plugging estiamtes for the parameters into Bayes' theorem in order to perform prediction. However, unlike LDA, QDA assumes that each class has its own covariance matrix. That is, it assumes that an observation from the $k$th class is of the form $X \sim N(\mu_k, \Sigma_j)$, where $\Sigma_k$ is a covariance matrix for the $k$th class. Under this assumption, the Bayes classifier assigns an observation $X = x$ to class for which 
+
+<div>
+$$
+\begin{aligned}
+\delta_k(x) &= -\frac{1}{2}(x - \mu_k)^T \Sigma_k^{-1}(x - \mu_k) - \frac{1}{2}log|\Sigma_k|+log\pi_k \\
+&=-\frac{1}{2}x^T\Sigma_k^{-1}x + x^T\Sigma_k^{-1}\mu_k - \frac{1}{2}\mu_k^T\Sigma_k^{-1}-\frac{1}{2}log|\Sigma_k| + log\pi_k
+\end{aligned}
+$$
+</div>
+
+is largest. So the QDA classifier involves plugging estimates for $\Sigma_k, \mu_k$ and $\pi_k$. The quantity $x$ appears as a quadratic function. This is where QDA gets its name.
+
+Why does it matter whether or not we assume that the $K$ classes share a common covariance matrix? In other words, why would one prefer LDA to QDA or vice-versa? The answer lies in the bias-variance trade-off. When there are $p$ predictors, then estiamting a covariance matrix requires estimating $p(p+1)/2$ parameters. QDA estimates a separate covariance matrix for each class, for a total of $Kp(p+1)/2$ parameters. With 50 predictors this is some multiple of 1225, which is a lot of parameters. By instead assuming that the $K$ classes share a common covariance matrix, the LDA model becomes linear in $x$, which means there are $Kp$ linear coefficients to estimate. Consequently, LDA is a much less flexible classifier than QDA, and so has substantially lower variance. This can potentially lead to improved prediction performance. But there is a trade-off, if LDA's assumption that the $K$ class share a common covariance matrix is badly off, then LDA can suffer from high bias. ROughly speaking, LDA tends to be a better bet than QDA if there are relatively few training obsrvations and so reducing variance is crucial. In contrast, QDA is recommended if the training set is very large, so that the variance of the classifier is not a major concern, or if the assumption of a common variance matrix for the $K$ classes is clearly untenable.
+
+## A Comparison of Classification Methods
+
+We have considered three different classification approaches: logistic regression, LDA, and QDA. In chapter 2, we also discussed the K-nearest neighbors (KNN) method. We now consider the types of scenarios in which on approach might dominate the others.
+
+Though their motivations differ, the logistic regression and LDA methods are closely connected. Consider the two-class setting which $p=1$ predictor, and let $p_1(x)$ and $p_2(x)=1-p_1(x)$ be the probability that the observation $X=x$ belongs to class 1 and class 2, respectively. In the LDA framework, we can see that the log odds is given by 
+
+<div>
+$$
+log\Big(\frac{p_1(x)}{1-p_1(x)}\Big) = log\Big(\frac{p_x(x)}{p_2(x)}\Big) = c_0 + c_1 x
+$$
+</div>
+
+where $c_0$ and $c_1$ are functions of $\mu_1$, $\mu_2$ and $\sigma^2$. We also know that in logistic regression,
+
+<div>
+$$
+log\Big(\frac{p_1}{1-p_1}\Big) = \beta_0 + \beta_1 x
+$$
+</div>
+
+Both are linear functions of $x$. Hence, both logistic regression and LDA produce linear decision boundaries. The only difference between the two approaches lies in the fact that $\beta_0$ and $\beta_1$ are estimated using maximum likelihood, where $c_0$ and $c_1$ are computed using the estimated mean and variance from a normal distribution. This same connection between LDA and logistic regression also holds for multidimensinal data with $p > 1$.
+
+Since logistic regression and LDA differ only in their fitting procedures, one might expect the two approaches to give similar results. This is often, but not always, the case. LDA assumes that the observations are drawn from a Gaussian distribution with a common covariance matrix in each class, and so can provide some improvements over logistic regression when this assumption approximately holds. Conversely, logistic regression can outperform LDA if these Gaussian assumptions are not met.
+
+Recall that KNN takes a completely different approach from the classifier seen this chapter. In order to make a prediction for an observation $X = x$, the $K$ training ovservations that are closest to $x$ are identified. Then $X$ is assigned to the class to which the plurality of these observations belong. Hence KNN is a completely non-parametric approach: no assumptions are made about the shape of the decision boundary. Therefore, we can expect this approach to dominate LDA and logistic regression when the decision boundary is highly non-linear. On the other hand, KNN does not tell us which predictors are important; we don't get a table of coefficients.
+
+Finally, QDA serves as a compromise between the non-parametric KNN method and the linear LDA and logistic regression approaches. Since QDA assumes a quadratic decision boundary, it can accurately model a wider range of problems than can the linear methods. Though not as flexible as KNN, QDA can perform better in the presence of a limited number of training observations because it does make some assumptions abou the form of the decision boundary.
+
+No one method will dominate the others in every situatioin. When the true decision boundaries are linear, then the LDA and logistic regression appraoches will tend to perform well. When the boundaries are moderately non-linear, QDA may give better results. Finally for much more complicated decision boundaries, a non-parametric approach such as KNN can be superio. But the level of smoothness for a non-parametric approach must be chosen carefully.
+
+Finally, we cann that in the regression setting we can accommodate a non-linear relationship between the predictors and the response by performing regression using transformations of the predictors. A similar approach could be taken in the classification setting. For instance, we could create a more flexible version of logistic regression by including $X^2, X^3$ and even $X^4$ as predictors. This may or may not improve logistic regression performance, depending on whether the increase in variance due to the added flexibility is offset by a sufficiently large reduction in bias. We could do hte same for LDA. If we add all possible quadratic terms and cross-products to LDA, the form of the model would be the same as the QDA model, although the parameter estimates would be different. This device allows us to move somewhere between an LDA and a QDA model.
+
+
