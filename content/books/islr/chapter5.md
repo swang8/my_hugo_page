@@ -23,7 +23,7 @@ Suppose that we would like to estimate the test error associated with fitting a 
 
 *Leave-one-out cross-validation* (LOOCV) is closely related to the validation set approach, but it attempts to address that method's drawbacks.
 
-Like the validation set appraoch, LOOCV involves splitting the set of observations into two parts. However, instead of creating two subsets of comparable size, a single observation $(x_1, y_1)$ is used for validation set, and hte remaining observations  ${(x_2, y_2), \ldots,(x_n, y_n)}$ make up the training set. The statistical learning method is fit on the $n-1$ traiing observations, and a prediction $\hat{y}_1$ is mad for the excluded observation, using its values $x_1$. Since $(x_1, y_1)$ was not used in the fitting process, $MSE_1 = (y1 - \haty{_1})^2$ provides an approximately unbiased estimate for the test error. But even though $MSE_1$ is unbiased for the test error, it is a poor estimate because it is highly variable, since it is based on a single observation $(x_1, y_1)$. 
+Like the validation set appraoch, LOOCV involves splitting the set of observations into two parts. However, instead of creating two subsets of comparable size, a single observation $(x_1, y_1)$ is used for validation set, and hte remaining observations  ${(x_2, y_2), \ldots,(x_n, y_n)}$ make up the training set. The statistical learning method is fit on the $n-1$ traiing observations, and a prediction $\hat{y}_1$ is mad for the excluded observation, using its values $x_1$. Since $(x_1, y_1)$ was not used in the fitting process, $MSE_1 = (y1 - \hat{_1})^2$ provides an approximately unbiased estimate for the test error. But even though $MSE_1$ is unbiased for the test error, it is a poor estimate because it is highly variable, since it is based on a single observation $(x_1, y_1)$. 
 
 We can repeat the procedure by selecting $(x_2, y_2)$ for the valdiation data, training the statistical learning procedure on the $n-1$ observations $(x_1, y_1), (x_3, y_3), \ldots,(x_n, y_n)$, and computing $MSE_2=(y_2 - \hat{y}_2)^2$. Repeating this approach $n$ times produces $n$ squared errors, $MSE_1, \ldots, MSE_n$. The LOOCV estimate for the test MSE is the average of these $n$ test error estimates:
 
@@ -101,11 +101,16 @@ Suppose that we wish to invest a fixed sum of money in two financial assets that
 
 <div>
 $$
-\alpha = \frac{\sigma_{Y}^2 - \sigma_{XY}}{\sigma_{X}^2+\sigma_{Y}^2-2\sigma_{XY}}
+\begin{aligned}
+\alpha &= \frac{\sigma_{Y}^2 - \sigma_{XY}}{\sigma_{X}^2+\sigma_{Y}^2-2\sigma_{XY}}
+\\
+where,\\
+\sigma_{X}^2 &= Var(X) \\
+\sigma_{Y}^2 &= Var(Y) \\
+\sigma_{XY} &= Cov(X, Y)
+\end{aligned}
 $$
 </div> 
-
-where $\sigma_{X}^2 = Var(X)$ , $\sigma_{Y}^2 = Var(Y)$ , and $\sigma_{XY} = Cov(X, Y)$.
 
 In reality, the quantities $\sigma_{X}^2$, $\sigma_{Y}^2$ and $\sigma_{XY}$ are unknown. We can compute estimtes for these quantities, $\hat{\sigma}_{X}^2$, $\hat{\sigma}_{Y}^2$ and $\hat{\sigma}_{XY}$, using a data set that contains past measurements for $X$ and $Y$. We can then estimate the value of $\alpha$ that minimizes the variance of our investment.
 
