@@ -215,8 +215,113 @@ The `lasso` is a relatively recent alternative to ridge regression that overcome
 
 <div>
 $$
-\sum_{i=1}^n\bigg(y_i - \beta_0 - \sum_{j=1}^p \beta_i x_{ij} \bigg)^2 + \lambda \sum_{j=1}^p|\beta_j| = RSS + \lambda \sum_{j=1}^p|\beta_j|
+\tag{6.7}\sum_{i=1}^n\bigg(y_i - \beta_0 - \sum_{j=1}^p \beta_i x_{ij} \bigg)^2 + \lambda \sum_{j=1}^p|\beta_j| = RSS + \lambda \sum_{j=1}^p|\beta_j|
 $$
 </div>
+
+Comparing 6.7 to 6.5, we see that the lasso and ridge regression have similar formulations. The only difference is that the $\beta_j^2$ term in the ridge regression penalty (6.5) has been replaced by $|\beta_j|$ in the lasso penalty (6.7). In statistical parlance, the lasso uses and $l_1$ penalty instead of an $l_2$ penalty. The $l_1$ norm of a coefficient vector $\beta$ is given by $\parallel\beta\parallel_1 = \Sigma|\beta_j|$.
+
+As with ridge regression, the lasso shrinks the coefficient estimates towards zero. However, in the case of lasso, the $l_1$ penalty has the effect of forcing some of the coefficient estimates to be exactly equal to zero when the tuning parameter $\lambda$ is sufficiently large. Hence, much like best subset selection, the lasso preforms `variable selection`. As a result, models generated from the lasso are generally much easier to interpret than those those produced by ridge regression. We say that the lasso yields sparse models--that is, models that involve only a subset of the variables. As in ridge regression, selecting a good value of $\lambda$ for the lasso is critical.
+
+#### Another Formulation for Ridge Regression and the Lasso
+
+One can show that the lasso and ridge regression coefficient estimates solve the problems 
+
+<div>
+$$
+\tag{6.8}\underset{\beta}{\text{minimize}}\Bigg\lbrace\sum_{i=1}^n\Big(y_i-\beta_0-\sum_{j=1}^p \beta_j x_{ij} \Big)\Bigg\rbrace\,\text{ subject to }\,\sum_{j=1}^p |\beta_j| \le s
+$$
+</div> 
+
+and
+
+<div>
+$$
+\tag{6.9}\underset{\beta}{\text{minimize}}\Bigg\lbrace\sum_{i=1}^n\Big(y_i-\beta_0-\sum_{j=1}^p \beta_j x_{ij} \Big)\Bigg\rbrace\,\text{ subject to }\,\sum_{j=1}^p \beta_j^2 \le s
+$$
+</div>
+
+respectively.
+
+#### The Variable Selection Property of the Lasso
+
+Why is it that the lasso, unlike ridge regression, results in coefficient estimates that are exactly to zero? The formulatons (6.8) and (6.9) can be used to shed light on this issue.
+
+<img src="/images/islr_F6.7.png" />
+
+Figure 6.7 illustrates the situation. The least squares solution is markedas $\hat{\beta}$, while the blue diamond and circle represent the lasso and ridge regression constraints in (6.8) and (6.9), respectively. If $s$ is sufficiently large, then the constraint regions will contain $\hat{\beta}$, and so the ridge regression and lasso estimtes will be the same as the least squares estimates. (Such a large value of $s$ corresponds to $\lambda = 0$.) However, in Figure 6.7 the least squares estiamtes lie outside of the diamond and the circle, and so the least squares estiamtes are not the same as the lasso and ridge regression estimates.
+
+The red ellipses that are centered around $\hat{\beta}$ represent regions fo constant $RSS$. In other words, all of the points on a given ellipse share a common value of the $RSS$. Equation (6.8) and (6.9) indicate that the lasso and ridge regression coefficient estimates are given by the first point at which an ellipse contacts the constraint region. Since ridge regression has a circular contraints with no sharp points, this intersection will not generally occur on an axis, and sod the ridge regression coefficient estimates will be exclusively non-zero. However, the lasso constraint has corners at each of the axes, and so the ellipse will often intersect the constraint region at an axis. When this occurs, one of the coefficient estimates may equal zero. In higher dimension, many of the coefficient estimates may equal zero simultaneously.
+
+#### Comparing the Lasso and Ridge Regression
+
+It is clear that the lasso has a major advantage over ridge regression, in that it produces simpler and more interpretable models that involve only a subset of the predictors. However, which method leads to better prediction accuracy? 
+
+Neither ridge regression nor the lasso will universally dominate the other. In general, one might expect the lasso to perform better in a setting where a relatively smally number of predictors have substantial coefficients, and the remaining predictors have coefficients that are very small or that equal zero. Ridge regression will perform better when the response is a function of many predictors, all with coefficients of roughly equal size. However, the number of predictors that is related to the response is never known a prior for real datasets. A technique such as cross-validation can be used in order to determine which approach is better on a particular data set.
+
+As with ridge regression, when the least squares estimates have excessively high variance, the lasso solution can yield a reduction in variance at the expense of a small increase in bias, and consequently can generate more accurate predictions. Unlike ridge regression, the lasso performs variable seleciton, and hence results in models that are easier to interpret.
+
+#### A simple special case for Ridge Regression and the Lasso
+
+In order to obtain a better intuition about the behavior of ridge regression and the lasso, consider a simple special case with $n = p$, and $X$ a diagonal matrix with 1's on the diagonal and 0's in all off-diagonal elements.
+
+To simply the problem further, assume also that we are performing regression without an intercept. With these assumptions, the usual least squares problem simplifies to finding $\beta_1, \ldots,\beta_p$ that minimize
+
+<div>
+$$
+\tag{6.11}\sum_{j=1}^p(y_i - \beta_j)^2
+$$
+</div>
+
+In this case, the least squares solution is given by 
+
+<div>
+$$
+\hat{\beta}_j = y_i
+$$
+</div>
+
+And in this setting, ridge regression amounts to finding $\beta_1,\ldots,\beta_p$ such that 
+
+<div>
+$$
+\tag{6.12}\sum_{j=1}^p(y_i-\beta_j)^2 + \lambda \sum_{j=1}^p\beta_j^2
+$$
+</div>
+
+is minimized, and the lasso amounts to fiding the coefficients such that 
+
+<div>
+$$
+\tag{6.13}\sum_{j=1}^p(y_i-\beta_j)^2 + \lambda \sum_{j=1}^p|\beta_j|
+$$
+</div>
+
+is minimized. One can show that in this setting, the ridge regression estimates take the form
+
+<div>
+$$
+\tag{6.14}\hat{\beta}_j^R = y_i / (1 + \lambda)
+$$
+</div>
+
+and the lasso estimates take the form
+
+<div>
+$$
+\tag{6.15}\hat{\beta}_j^L = 
+\begin{cases}
+y_i - \lambda / 2  &\text{ if } y_j > \lambda /2; \\
+y_j + \lambda / 2  &\text{ if } y_j < -\lambda/2; \\
+0 &\text{ if } |y_j| \le \lambda / 2.
+\end{cases}
+$$
+</div>
+
+Figure 6.10 displays the situation. We can see that ridge regression and the lasso perform two very different types of shrinkage. In ridge regression, each least squares coeffcient estimate is shrunken by the same proportion. In contrast, the lasso shrinks each least squares coefficient towards zero by a constant amoutn, $\lambda / 2$; the least squares coefficients that are less than $\lambda/2$ in absolute value are shrunked entirely to zero. The type of shrinkage performed by the lasso in this simple setting is known as `soft-thresholding`. 
+
+<img src="/images/islr_F6.10.png" />
+
+#### Bayesian interpretation for Ridge Regression and the Lasso
 
 
